@@ -64,7 +64,7 @@ public class Lexer {
         try {
             Double.parseDouble(numStr);
         } catch (NumberFormatException e){
-            throw new IllegalArgumentException("Incorrect number: " + numStr);
+            throw new IllegalArgumentException("Invalid number: '" + numStr + "'");
         }
         return new Token (Token.Type.NUMBER, numStr);
     }

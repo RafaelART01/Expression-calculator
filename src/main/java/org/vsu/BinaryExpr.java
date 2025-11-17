@@ -22,12 +22,11 @@ public class BinaryExpr implements Expr{
             case "-" -> l - r;
             case "*" -> l * r;
             case "/" -> {
-                if (r == 0) {
+                if (r == 0.0) {
                     if (l == 0.0) {
-                        yield Double.NaN;
-                    } else {
-                        yield l > 0 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY;
+                        yield  Double.NaN;
                     }
+                    yield l > 0 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY;
                 }
                 yield l / r;
             }
