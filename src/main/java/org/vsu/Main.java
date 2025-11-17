@@ -28,6 +28,15 @@ public class Main {
                 System.out.println("AST: " + ast);
 
                 double result = ExprEval.evaluateInteractive(ast);
+
+                if (Double.isNaN(result)) {
+                    System.err.println("Answer is not a number!");
+                } else if (Double.isInfinite(result)) {
+                    System.err.println("Answer is infinity!");
+                } else if (Math.abs(result) > 1e12) {
+                    System.out.println("Answer is really large, possible singularity");
+                }
+
                 System.out.printf("Answer: %.10f%n%n", result);
             } catch (Exception e){
                 System.err.println("Error! " + e.getMessage() + "\n");
