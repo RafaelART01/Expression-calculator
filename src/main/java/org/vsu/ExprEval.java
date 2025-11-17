@@ -10,27 +10,13 @@ public class ExprEval {
         return parser.parse();
     }
 
-    public static double evaluate(String expression, Map<String, Double> variables){
-        Expr ast = parse(expression);
+    public static double evaluate(Expr ast, Map<String, Double> variables){
         return ast.eval(variables);
     }
 
-    public static double evaluateInteractive(String expression){
-        Expr ast = parse(expression);
+    public static double evaluateInteractive(Expr ast){
         Set<String> vars = extractVariables(ast);
-        Map<String, Double> context = new HashMap<>();
-
-        Scanner scanner = new Scanner(System.in);
-        for (String var : vars){
-            if (!isConstant(var)){
-                System.out.print("Enter value for the variable '" + var + "': ");
-                try{
-                    context.put(var, Double.parseDouble(scanner.nextLine().trim()));
-                } catch (NumberFormatException e){
-                    throw new IllegalArgumentException("Incorrect value for the variable '" + var + "'");
-                }
-            }
-        }
+        Map<String, Double> context = promtForVariables(vars);
         return ast.eval(context);
     }
 
@@ -38,7 +24,7 @@ public class ExprEval {
         return "pi".equals(name) || "e".equals(name);
     }
 
-    private static Set<String> extractVariables(Expr expr){
+    public static Set<String> extractVariables(Expr expr){
         Set<String> vars = new LinkedHashSet<>();
         extractVarsRecursive(expr, vars);
         return vars;
@@ -57,5 +43,25 @@ public class ExprEval {
                 extractVarsRecursive(arg, vars);
             }
         }
+    }
+
+    private static Map<String, Double> promtForVariables(Set<String> varNames){
+        if (varNames.isEmpty()){
+            return Map.of();
+        }
+
+        Map<String, Double> context = new HashMap<>();
+        Scanner scanner = new Scanner(System.in);
+        for (String var : varNames){
+            if (!isConstant(var)){
+                System.out.print("Enter value for the variable '" + var + "': ");
+                try{
+                    context.put(var, Double.parseDouble(scanner.nextLine().trim()));
+                } catch (NumberFormatException e){
+                    throw new IllegalArgumentException("Incorrect value for the variable '" + var + "'");
+                }
+            }
+        }
+        return context;
     }
 }
