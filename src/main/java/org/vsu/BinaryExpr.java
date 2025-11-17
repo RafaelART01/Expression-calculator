@@ -11,6 +11,9 @@ public class BinaryExpr implements Expr{
         this.right = right;
     }
 
+    public Expr left(){ return left; }
+    public Expr right(){ return right; }
+
     public double eval(java.util.Map<String, Double> variables){
         double l = left.eval(variables);
         double r = right.eval(variables);

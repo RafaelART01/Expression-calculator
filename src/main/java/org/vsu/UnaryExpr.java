@@ -9,6 +9,8 @@ public class UnaryExpr implements Expr{
         this.operand = operand;
     }
 
+    public Expr operand(){ return  operand; }
+
     @Override
     public double eval(java.util.Map<String, Double> variables){
         double val = operand.eval(variables);

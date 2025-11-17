@@ -11,6 +11,8 @@ public class FunctionCallExpr implements Expr{
         this.args = args;
     }
 
+    public List<Expr> args(){ return args; }
+
     @Override
     public double eval(java.util.Map<String, Double> variables){
         java.util.List<Double> evaluatedArgs = args.stream()
