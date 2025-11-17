@@ -55,7 +55,7 @@ public class Parser {
         Expr left = parseUnary();
         while (pos < tokens.size() && tokens.get(pos).type == Token.Type.POW){
             pos++;
-            Expr right = parseUnary();
+            Expr right = parsePower();
             left = new BinaryExpr("^", left, right);
         }
         return left;
@@ -67,7 +67,7 @@ public class Parser {
             if (token.type == Token.Type.PLUS || token.type == Token.Type.MINUS){
                 String op = token.value;
                 pos++;
-                Expr operand = parseUnary();
+                Expr operand = parsePower();
                 return new UnaryExpr(op, operand);
             }
         }

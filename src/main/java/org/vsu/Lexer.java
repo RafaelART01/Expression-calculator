@@ -45,15 +45,18 @@ public class Lexer {
 
     private Token lexNumber(){
         int start = pos;
-        while (pos < input.length()){
+        while (pos < input.length()) {
             char c = input.charAt(pos);
-            if (Character.isDigit(c) || c == '.' || c == 'e' || c == 'E' || c == '+' || c == '-'){
-                if ((c == '+' || c == '-') && pos >start){
-                    char prev = input.charAt(pos - 1);
-                    if (prev != 'e' && prev != 'E') break;
-                }
+            if (Character.isDigit(c) || c == '.' || c == 'e' || c == 'E') {
                 pos++;
-            } else{
+            } else if ((c == '+' || c == '-') && pos > start) {
+                char prev = input.charAt(pos - 1);
+                if (prev == 'e' || prev == 'E') {
+                    pos++;
+                } else {
+                    break;
+                }
+            } else {
                 break;
             }
         }
